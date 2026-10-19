@@ -1,4 +1,4 @@
-# ESOL Lab 2 — 可复现实验项目（服务器 GPU:1）
+# ESOL LogS Prediction
 
 ## 0. 目标及设计理由
 
