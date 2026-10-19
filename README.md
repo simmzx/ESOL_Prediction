@@ -1,6 +1,6 @@
 # ESOL LogS Prediction
 
-## 0. 设计理由
+## 0. 模型设计
 
 模型两条路线：
 
@@ -13,7 +13,7 @@
 - https://github.com/chemprop/chemprop （MPNN延伸方向；出于速度和小样本稳定性考虑，主实验不依赖Chemprop）
 - https://github.com/githublearner123456/esol （描述符+指纹DNN参考）
 
-## 1. 数据情况（已通过代码检查）
+## 1. 数据
 
 位置： `data/esol.csv`
 
@@ -63,19 +63,19 @@ nvidia-smi -i 1
 
 出现 `[SUCCESS]` 表示全流程成功。`nohup` 持久化后台任务
 
-### 快速首跑（单随机种子）
+### 快速跑通（单随机种子）
 
 ```bash
 bash scripts/launch_background.sh --data /home/zhangxiang_cluster/assign1/esol.csv --output /home/zhangxiang_cluster/assign1/esol_lab2_complete/results/quick_random --mode fast --gpu 1
 ```
 
-### 骨架泛化附加实验
+### 骨架泛化（附加实验）
 
 ```bash
 bash scripts/launch_background.sh --data /home/zhangxiang_cluster/assign1/esol.csv --output /home/zhangxiang_cluster/assign1/esol_lab2_complete/results/secondary_scaffold --split scaffold --mode fast --gpu 1
 ```
 
-注意：骨架实验是单独完整训练，**不能拿random训练的模型直接在同一个random-test上伪称scaffold-test**。比较时报告划分细节。
+注意：骨架实验是单独完整训练，**不能拿random训练的模型直接在同一个random-test上称scaffold-test**。比较时报告划分细节。
 
 
 ## 4. 输出文件与PDF六阶段映射
@@ -97,6 +97,4 @@ bash scripts/launch_background.sh --data /home/zhangxiang_cluster/assign1/esol.c
 1. **公平**：ML与RNN共用同一个训练/验证/测试划分和logS标签；训练和目标标准化不能使用测试数据。分子重复结构不得跨集合。
 2. **选择模型**：候选模型和超参数在 `src/train_ml.py` 中预注册，优选指标是验证集RMSE；最终只计算选中ML模型在测试集的结果、Dummy测试结果及预声明RNN模型的测试指标。
 3. **稳定性**：主模式对RNN进行3种子重复，报告均值±样本标准差；ML仅一个数据分割和一个候选搜索，**不能将其单次成绩表达成多次训练的均值或科学确定的“最佳”**。
-4. **交叉验证更强**：如需要完整机器学习论文级结论，可以在不查看测试集的前提下再采用训练部分的GroupKFold嵌套CV；这套课程作业优先保证流程可复现、时间可控。
-5. **对参考项目的解释**：不同作者的测试集、去重、数据预处理不一致，网上0.55/0.80 RMSE不应与本项目测试分数直接排名。
-6. **解释用于对照的RNN基线**：这是层结构与训练参数匹配的PyTorch implementation，非原TensorFlow/Keras复现；比如使用验证最好epoch进行检查点选择、固定分组拆分。因此写“teacher-inspired BiLSTM baseline”而非“exact original result”。
+4. **解释用于对照的RNN基线**：这是层结构与训练参数匹配的PyTorch implementation，非原TensorFlow/Keras复现；比如使用验证最好epoch进行检查点选择、固定分组拆分。因此写“teacher-inspired BiLSTM baseline”而非“exact original result”。
