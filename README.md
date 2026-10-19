@@ -5,8 +5,8 @@
 模型两条路线：
 
 - **RNN 主线** PyTorch 复现：Embedding(64) → BiLSTM(64) → BiLSTM(32) → Dense(64) → Dropout(0.3) → logS；及改进版 Embedding(64) → BiGRU(64) → masked additive attention → Dense(64) → logS。
-- **高性能小样本路线**：从 SMILES 计算 RDKit 7/28维描述符 + Morgan(半径2、1024位)；仅在训练集拟合缺失值处理器；候选包括 Ridge、RF、ExtraTrees、SVR、XGBoost；比较 11 种预设模型组合，并以 **验证集RMSE最小**的非 Dummy 模型作为选定模型。XGBoost 默认使用CPU（仅1,128行，CPU histogram 往往更快），可选GPU。**不能因为测试集上另一个模型更好而更换模型。**
-
+- **高性能小样本路线**：从 SMILES 计算 RDKit 7/28维描述符 + Morgan(半径2、1024位)；仅在训练集拟合缺失值处理器；候选包括 Ridge、RF、ExtraTrees、SVR、XGBoost；比较 11 种预设模型组合，并以 **验证集RMSE最小**的非 Dummy 模型作为选定模型。XGBoost 默认使用CPU（仅1,128行，CPU histogram 往往更快），可选GPU。
+- 
 致谢本项目借鉴的开源项目：
 - https://github.com/Skurau/Delaney-ESOL （RF/GNN及分析框架）
 - https://github.com/wandixu/esol-solubility-prediction （RDKit、Morgan、XGB、scaffold split）
