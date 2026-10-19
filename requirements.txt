@@ -1,0 +1,9 @@
+# Use Python 3.10-3.12, preferably 3.11; PyTorch installed separately for the server CUDA version.
+numpy>=1.24,<3
+pandas>=2.0,<3
+scipy>=1.10,<2
+scikit-learn>=1.3,<2
+rdkit>=2023.9.1
+xgboost>=2.0,<4
+matplotlib>=3.7,<4
+joblib>=1.3,<2
